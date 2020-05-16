@@ -1,22 +1,15 @@
 import discord
 from discord.ext import commands
-import requests
 import setup
-import random
-import requests
-from discord import Webhook, RequestsWebhookAdapter
-import json
 from discord.utils import get
 from discord import FFmpegPCMAudio
 import os.path
 import os
 
 
-description = "Type $info to see more information."
+description = "Type !pokemon <pokemon> to play their cries."
 TOKEN = setup.TOK
 client = commands.Bot(command_prefix='!', description=description, help_command=None)
-path = './data.txt'
-lastmessage = [1]
 
 
 @client.event
@@ -37,21 +30,11 @@ async def on_guild_remove(guild):
     print("Removed From Server: " + guild.name + ". Members: " + str( len(guild.members) ) + ". Owner: " + guild.owner.display_name + ".")
 
     
-
-
 @client.event
 async def on_message(message):
     if message.author == client.user:   
         return       
     await client.process_commands(message)
-
-    
-  
-  
-@client.command()
-async def add(ctx, left: int, right: int):
-    """Adds two numbers together."""
-    await ctx.send(left + right)
 
 @client.command()
 async def pokemon(ctx, pkmn):
@@ -70,52 +53,6 @@ async def pokemon(ctx, pkmn):
     else:
         voice = await channel.connect()
     source = FFmpegPCMAudio(audio_path)
-    player = voice.play(source)
-
-    
-@client.command()
-async def ending(ctx):
-    await ctx.send("Playing Kekkai Sensen ED")
-    channel = ctx.message.author.voice.channel
-    if not channel:
-        await ctx.send("You are not connected to a voice channel")
-        return
-    voice = get(client.voice_clients, guild=ctx.guild)
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
-    source = FFmpegPCMAudio('ending.mp3')
-    player = voice.play(source)
-
-@client.command()
-async def noragami_op_2(ctx):
-    await ctx.send("Playing Kyōran Hey Kids!!")
-    channel = ctx.message.author.voice.channel
-    if not channel:
-        await ctx.send("You are not connected to a voice channel")
-        return
-    voice = get(client.voice_clients, guild=ctx.guild)
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
-    source = FFmpegPCMAudio('noragami_op_2.mp3')
-    player = voice.play(source)
-
-@client.command()
-async def noragami_op_1(ctx):
-    await ctx.send("Playing Goya wa Machiawase")
-    channel = ctx.message.author.voice.channel
-    if not channel:
-        await ctx.send("You are not connected to a voice channel")
-        return
-    voice = get(client.voice_clients, guild=ctx.guild)
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
-    source = FFmpegPCMAudio('noragami_op_1.mp3')
     player = voice.play(source)
     
 
