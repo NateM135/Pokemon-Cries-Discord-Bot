@@ -56,9 +56,7 @@ async def add(ctx, left: int, right: int):
 @client.command()
 async def pokemon(ctx, pkmn):
     audio_path = "./audio_files/" + pkmn.lower() + ".mp3"
-    if os.path.exists(audio_path) :
-        await ctx.send("exists, locating file")
-    else:
+    if not os.path.exists(audio_path):
         await ctx.send("pokemon doesnt exist or is too new - this has everything on pkmnshowdown")
         return
     await ctx.send("Playing " + pkmn + "'s cry")
